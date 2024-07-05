@@ -33,7 +33,7 @@ class Game
     def guess
       if @player1.role == "codebreaker"
         @@codebreaker = @player1.name
-        puts "Make your guess:"
+        puts "\nMake your guess:"
         while @@guess = gets.chomp
           if @@guess.length == 4
             break
@@ -45,14 +45,14 @@ class Game
       else
         @@codebreaker = @player2.name
         4.times do
-          @@guess =+ rand(1..4)
+          @@guess += rand(1..4).to_s
         end
         @player2.guesses += 1
       end
     end
   
     def check_match
-      @exact = 0
+      @@exact = 0
       @partial = 0
   
       @guess_array = @@guess.to_s.split('')
@@ -65,13 +65,32 @@ class Game
         end
         if @code_array[@index] == guess
           @partial -= 1
-          @exact += 1
+          @@exact += 1
         end
         @index += 1
       end
       puts "\nGuess: #{@@guess}"
-      puts "\nExact match: #{@exact}"
-      puts "Partial match: #{@partial}"  
+      puts "\nExact match: #{@@exact}"
+      puts "Partial match: #{@partial}" 
+      
+      @@guess = ""
+    end
+
+    def check_win
+        if @@exact == 4
+            @@winner == @@codebreaker
+            return true
+        end
+    end
+
+    def out_of_guesses(player1, player2) 
+        if player1.guesses == GUESS_LIMIT
+            puts "\nYOU LOST. You're out of guesses."
+            return true
+        elsif player2.guesses == GUESS_LIMIT
+            puts "\nYOU WIN! #{player2.name} didn't manage to crack your code."
+            return true
+        end
     end
   
   end

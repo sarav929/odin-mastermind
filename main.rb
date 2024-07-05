@@ -2,7 +2,7 @@
 require_relative("/home/sarav9/repos/ruby/odin-mastermind/lib/player.rb")
 require_relative("/home/sarav9/repos/ruby/odin-mastermind/lib/game.rb")
 
-GUESS_LIMIT = 3
+GUESS_LIMIT = 12
 
 p2_name = "Computer"
 p2_role = ""
@@ -33,10 +33,19 @@ player2 = Player.new(p2_name, p2_role, 0)
 game = Game.new(player1, player2)
 
 game.create_code
-until player1.guesses >= GUESS_LIMIT or player2.guesses >= GUESS_LIMIT
-  game.guess
-  game.check_match
-  if @@winner != ""
-    break
-  end
+GUESS_LIMIT.times do 
+    game.guess
+    game.check_match
+    if game.check_win
+        puts "\nYOU WON! Congrats #{player1.name} you managed to crack the code."
+        break
+    elsif game.out_of_guesses(player1, player2)
+        break
+    end
 end
+
+
+
+
+
+
