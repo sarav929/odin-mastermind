@@ -10,25 +10,24 @@ class Game
     @@codebreaker = ""
   
     def create_code
-      if @player1.role == "codemaker"
-  
-        puts "Enter a digit between 1 and 4 to create your code sequence:"
-        while @digit = gets.chomp.to_i
-          if @digit < 1 or @digit > 4
-            puts "Try again."
-          else
-            @@secret_code += @digit.to_s
-            if @@secret_code.length == 4
-              puts "Your secret code is #{@@secret_code}. Let's see if #{@player2.name} can crack it."
-              break
+        if @player1.role == "codemaker"
+            
+            while @@secret_code.length != 4 
+                puts "Enter a digit between 1 and 4 to create your code sequence:"
+                @digit = gets.chomp.to_i
+                if @digit >= 1 and @digit <= 4
+                    @@secret_code += @digit.to_s
+                else
+                    puts "Try again."
+                end
             end
-          end
+            puts "Great! Your secret code is #{@@secret_code}. Let's see if #{@player2.name} can crack it."
+
+        else
+            4.times do
+                @@secret_code += rand(1..4).to_s
+            end
         end
-      else
-        4.times do
-          @@secret_code += rand(1..4).to_s
-        end
-      end
     end
   
     def guess
@@ -70,8 +69,9 @@ class Game
         end
         @index += 1
       end
-      puts "Exact mathes: #{@exact}"
-      puts "Partial matches: #{@partial}"  
+      puts "\nGuess: #{@@guess}"
+      puts "\nExact match: #{@exact}"
+      puts "Partial match: #{@partial}"  
     end
   
   end
