@@ -1,6 +1,8 @@
 
-require_relative("/home/sarav9/repos/ruby/odin-mastermind/lib/player.rb")
-require_relative("/home/sarav9/repos/ruby/odin-mastermind/lib/game.rb")
+require "colorize"
+
+require_relative "lib/player"
+require_relative "lib/game"
 
 GUESS_LIMIT = 12
 
@@ -37,7 +39,7 @@ GUESS_LIMIT.times do
     game.guess
     game.check_match
     if game.check_win
-        puts "\nYOU WON! Congrats #{player1.name} you managed to crack the code."
+        puts "\nYOU WON! Congrats #{player1.name}, you managed to crack the code."
         break
     elsif game.out_of_guesses(player1, player2)
         break
